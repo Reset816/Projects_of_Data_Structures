@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
+#include <malloc.h>
 
 void arry(int m, int n) {
     int a[1000];
@@ -34,16 +35,16 @@ typedef struct person {
     struct person *next;
 } LinkList;
 
-void del(LinkList *p) {
+bool del(LinkList *p) {
     LinkList *tmp = p;
     if (p->next != p) {
         p->next = p->next->next;
     } else {
         free(p);
-        p = NULL;
-        return;
+        return 1;
     }
     free(tmp->next);
+    return 0;
 }
 
 void creat(int m, int n) {
@@ -64,20 +65,21 @@ void creat(int m, int n) {
     LinkList *p = head;
     int tmp = 0;
     int count = 0;
+    bool flag;
     while (1) {
         tmp++;
         if (tmp == n - 1) {
             out[count] = (p->next)->num + 1;
             count++;
-            del(p);//删除p的下一个结点
-            if (p == NULL) {
+            flag = del(p);//删除p的下一个结点
+            if (flag) {
                 for (i = 0; i < m; i++)
                     printf("%d", out[i]);
                 return;
             }
             tmp = 0;
+            p = p->next;
         }
-        p = p->next;
     }
 }
 
