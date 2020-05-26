@@ -40,14 +40,14 @@ bool del(LinkList *p) {
     if (p->next != p) {
         p->next = p->next->next;
     } else {
-        free(p);
+        //free(p);
         return 1;
     }
-    free(tmp->next);
+    //free(tmp->next);
     return 0;
 }
 
-void creat(int m, int n) {
+void LinkedList(int m, int n) {
     int out[1000];
     int i;
     LinkList *head, *node, *end;//定义头节点，普通节点，尾部节点；
@@ -62,12 +62,11 @@ void creat(int m, int n) {
     }
     end->next = head;//创建环
 
-    LinkList *p = head;
+    LinkList *p = end;
     int tmp = 0;
     int count = 0;
     bool flag;
     while (1) {
-        tmp++;
         if (tmp == n - 1) {
             out[count] = (p->next)->num + 1;
             count++;
@@ -78,10 +77,12 @@ void creat(int m, int n) {
                 return;
             }
             tmp = 0;
-            p = p->next;
         }
+        tmp++;
+        p = p->next;
     }
 }
+
 
 int main() {
     int m, n;//m：总人数 n：出列序号
@@ -89,6 +90,6 @@ int main() {
     scanf("%d %d", &m, &n);
 
     //arry(m,n);
-    creat(m, n);
+    LinkedList(m, n);
     return 0;
 }
