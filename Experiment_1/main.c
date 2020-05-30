@@ -40,7 +40,7 @@ bool del(LinkList *p) {
     if (p->next != p) {
         p->next = p->next->next;
     } else {
-        //free(p);
+        free(p);
         return 1;
     }
     free(tmp);
