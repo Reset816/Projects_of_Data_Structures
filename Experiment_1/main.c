@@ -36,14 +36,14 @@ typedef struct person {
 } LinkList;
 
 bool del(LinkList *p) {
-    LinkList *tmp = p;
+    LinkList *tmp = p->next;
     if (p->next != p) {
         p->next = p->next->next;
     } else {
         //free(p);
         return 1;
     }
-    //free(tmp->next);
+    free(tmp);
     return 0;
 }
 
@@ -100,8 +100,8 @@ int main() {
         printf("error");
         return 0;
     }
-    ArryMethod(m, n);
-    //LinkedListMethod(m, n);
+    //ArryMethod(m, n);
+    LinkedListMethod(m, n);
     //Optimization(m, n);
     return 0;
 }

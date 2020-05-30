@@ -8,14 +8,14 @@ typedef struct person {
 } LinkList;
 
 bool del(LinkList *p) {
-    LinkList *tmp = p;
+    LinkList *tmp = p->next;
     if (p->next != p) {
         p->next = p->next->next;
     } else {
         //free(p);
         return 1;
     }
-    //free(tmp->next);
+    free(tmp);
     return 0;
 }
 
