@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <malloc.h>
 
-void arry(int m, int n) {
+void ArryMethod(int m, int n) {
     int a[1000];
     int i;
     for (i = 0; i < m; i++)
@@ -47,7 +47,7 @@ bool del(LinkList *p) {
     return 0;
 }
 
-void LinkedList(int m, int n) {
+void LinkedListMethod(int m, int n) {
     int out[1000];
     int i;
     LinkList *head, *node, *end;//定义头节点，普通节点，尾部节点；
@@ -83,13 +83,25 @@ void LinkedList(int m, int n) {
     }
 }
 
+void Optimization(int m, int n) {
+    int i, s = 0;
+    for (i = 2; i <= m; i++) {
+        s = (s + n) % i;
+        //printf("%d\n",s);
+    }
+    printf("\nThe winner is %d\n", s + 1);
+}
 
 int main() {
     int m, n;//m：总人数 n：出列序号
 
     scanf("%d %d", &m, &n);
-
-    //arry(m,n);
-    LinkedList(m, n);
+    if (n == 0) {
+        printf("error");
+        return 0;
+    }
+    ArryMethod(m, n);
+    //LinkedListMethod(m, n);
+    //Optimization(m, n);
     return 0;
 }
