@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Experiment_1
+# Target rules for targets named Experiment_2
 
 # Build rule for target.
-Experiment_1: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 Experiment_1
-.PHONY : Experiment_1
+Experiment_2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 Experiment_2
+.PHONY : Experiment_2
 
 # fast build rule for target.
-Experiment_1/fast:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/build
-.PHONY : Experiment_1/fast
+Experiment_2/fast:
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/build
+.PHONY : Experiment_2/fast
 
 main.obj: main.c.obj
 
@@ -128,7 +128,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/main.c.obj
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -137,7 +137,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/main.c.i
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -146,7 +146,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/main.c.s
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -155,7 +155,7 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... Experiment_1
+	@echo ... Experiment_2
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... main.obj
