@@ -52,7 +52,7 @@ CMAKE_BINARY_DIR = C:\Users\Kente\Documents\GitHub\Projects_of_Data_Structures\E
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Experiment_1.dir/all
+all: CMakeFiles/Experiment_2.dir/all
 
 .PHONY : all
 
@@ -62,36 +62,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Experiment_1.dir/clean
+clean: CMakeFiles/Experiment_2.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Experiment_1.dir
+# Target rules for target CMakeFiles/Experiment_2.dir
 
 # All Build rule for target.
-CMakeFiles/Experiment_1.dir/all:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/depend
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Kente\Documents\GitHub\Projects_of_Data_Structures\Experiment_2\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Experiment_1"
-.PHONY : CMakeFiles/Experiment_1.dir/all
+CMakeFiles/Experiment_2.dir/all:
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/depend
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Kente\Documents\GitHub\Projects_of_Data_Structures\Experiment_2\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Experiment_2"
+.PHONY : CMakeFiles/Experiment_2.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Experiment_1.dir/rule: cmake_check_build_system
+CMakeFiles/Experiment_2.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Kente\Documents\GitHub\Projects_of_Data_Structures\Experiment_2\cmake-build-debug\CMakeFiles 2
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Experiment_1.dir/all
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Experiment_2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Kente\Documents\GitHub\Projects_of_Data_Structures\Experiment_2\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/Experiment_1.dir/rule
+.PHONY : CMakeFiles/Experiment_2.dir/rule
 
 # Convenience name for target.
-Experiment_1: CMakeFiles/Experiment_1.dir/rule
+Experiment_2: CMakeFiles/Experiment_2.dir/rule
 
-.PHONY : Experiment_1
+.PHONY : Experiment_2
 
 # clean rule for target.
-CMakeFiles/Experiment_1.dir/clean:
-	$(MAKE) -f CMakeFiles\Experiment_1.dir\build.make CMakeFiles/Experiment_1.dir/clean
-.PHONY : CMakeFiles/Experiment_1.dir/clean
+CMakeFiles/Experiment_2.dir/clean:
+	$(MAKE) -f CMakeFiles\Experiment_2.dir\build.make CMakeFiles/Experiment_2.dir/clean
+.PHONY : CMakeFiles/Experiment_2.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

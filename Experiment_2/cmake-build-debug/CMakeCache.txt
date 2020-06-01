@@ -133,7 +133,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Experiment_1
+CMAKE_PROJECT_NAME:STATIC=Experiment_2
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/ranlib.exe
@@ -223,6 +223,12 @@ Experiment_1_BINARY_DIR:STATIC=C:/Users/Kente/Documents/GitHub/Projects_of_Data_
 
 //Value Computed by CMake
 Experiment_1_SOURCE_DIR:STATIC=C:/Users/Kente/Documents/GitHub/Projects_of_Data_Structures/Experiment_2
+
+//Value Computed by CMake
+Experiment_2_BINARY_DIR:STATIC=C:/Users/Kente/Documents/GitHub/Projects_of_Data_Structures/Experiment_2/cmake-build-debug
+
+//Value Computed by CMake
+Experiment_2_SOURCE_DIR:STATIC=C:/Users/Kente/Documents/GitHub/Projects_of_Data_Structures/Experiment_2
 
 
 ########################
