@@ -1,69 +1,57 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
+#include <string.h>
 
-typedef struct person {
-    int num;
-    struct person *next;
-} LinkList;
+typedef struct Node {
+    int coefficient;//系数
+    int exp;
+    struct Node *next;
+} term;
 
-bool del(LinkList *p) {
-    LinkList *tmp = p->next;
-    if (p->next != p) {
-        p->next = p->next->next;
-    } else {
-        //free(p);
-        return 1;
-    }
-    free(tmp);
-    return 0;
-}
+typedef struct _list {
+    term *head;
+    term *tail;
+} list;
 
-void LinkedListMethod(int m, int n) {
-    int out[1000];
+void CreateLinkedList(list *plist, char arry[10000]) {
     int i;
-    LinkList *head, *node, *end;//定义头节点，普通节点，尾部节点；
-    head = (LinkList *) malloc(sizeof(LinkList));//分配地址
-    end = head;         //若是空链表则头尾节点一样
-    head->num = 0;
-    for (int i = 1; i < m; i++) {
-        node = (LinkList *) malloc(sizeof(LinkList));
-        node->num = i;
-        end->next = node;
-        end = node;
-    }
-    end->next = head;//创建环
+    i = 0;
 
-    LinkList *p = end;
-    int tmp = 0;
-    int count = 0;
-    bool flag;
+    plist->head = plist->tail = NULL;
+    char coefficient, exp;
     while (1) {
-        if (tmp == n - 1) {
-            out[count] = (p->next)->num + 1;
-            count++;
-            flag = del(p);//删除p的下一个结点
-            if (flag) {
-                for (i = 0; i < m; i++)
-                    printf("%d", out[i]);
-                return;
-            }
-            tmp = 0;
+        coefficient = arry[i] - '0';
+        exp = arry[i + 3] - '0';
+        term *p = (term *) malloc(sizeof(term));
+        p->coefficient = coefficient;
+        p->exp = exp;
+        p->next = NULL;
+        if (plist->tail) {
+            plist->tail->next = p;
+            plist->tail = p;
+        } else {
+            plist->head = p;
+            plist->tail = p;
         }
-        tmp++;
-        p = p->next;
-    }
-}
 
+        if (arry[i + 4] == '\0') {//如果下一位不是字符串最后一项
+            //printf("%d", i);
+            break;
+        }
+        i = i + 5;//移到下一项
+    }
+    scanf("%s", &i);
+};
 
 int main() {
-    int m, n;//m：总人数 n：出列序号
+    char A[10000], B[10000];//m：总人数 n：出列序号
+    scanf("%s %s", &A, &B);
+//    puts(A);//1x^0+7x^7+8x^9
+//    puts(B);
+    list Alist, Blist;
 
-    scanf("%d %d", &m, &n);
-    if (n == 0) {
-        printf("error");
-        return 0;
-    }
+    CreateLinkedList(&Alist, A);
 
     return 0;
 }
