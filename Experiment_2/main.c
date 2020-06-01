@@ -36,32 +36,42 @@ void CreateLinkedList(list *plist, char arry[10000]) {
     }
 }
 
+void AddtoOutlist(int coefficient, int exp, list *plist) {
+    term *p = (term *) malloc(sizeof(term));
+    p->coefficient = coefficient;
+    p->exp = exp;
+    p->next = NULL;
+    if (plist->tail) {
+        plist->tail->next = p;
+        plist->tail = p;
+    } else {
+        plist->head = p;
+        plist->tail = p;
+    }
+}
+
 void Add(list *Alist, list *Blist, list *Outlist) {
     Outlist->head = Outlist->tail = NULL;
     term *pA = Alist->head, *pB = Blist->head;
     while (pA && pB) {
         if (pA->exp == pB->exp) {
-            term *p = (term *) malloc(sizeof(term));
-            p->coefficient = pA->exp;
-            p->exp = pA->coefficient + pB->coefficient;
-            p->next = NULL;
-            if (Outlist->tail) {
-                Outlist->tail->next = p;
-                Outlist->tail = p;
-            } else {
-                Outlist->head = p;
-                Outlist->tail = p;
-            }
+            AddtoOutlist(pA->coefficient + pB->coefficient, pA->exp, Outlist);
+
             pA = pA->next;
             pB = pB->next;
+//            free(Alist->head);
+//            free(Blist->head);
+//            Alist->head = pA;
+//            Blist->head = pB;
         }
     }
 }
 
+
 void Output(list *plist) {
     term *p;
     for (p = plist->head; p != NULL; p = p->next) {
-        printf("%dx^%d", p->exp, p->coefficient);
+        printf("%dx^%d", p->coefficient, p->exp);
         if (p->next != NULL) {
             printf("+");
         }
@@ -73,6 +83,7 @@ int main() {
     scanf("%s %s", &A, &B);
 //    puts(A);//1x^0+7x^7+8x^9
 //    puts(B);//2x^0+1x^7+1x^9
+//    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist, A);
