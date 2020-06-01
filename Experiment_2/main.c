@@ -53,30 +53,53 @@ void AddtoOutlist(int coefficient, int exp, list *plist) {
 void Add(list *Alist, list *Blist, list *Outlist) {
     Outlist->head = Outlist->tail = NULL;
     term *pA = Alist->head, *pB = Blist->head;
-    while (pA || pB) {
+    bool isAleft = 1;
+    bool isBleft = 1;
+    while (isAleft || isBleft) {
         if (pA->exp == pB->exp) {
             AddtoOutlist(pA->coefficient + pB->coefficient, pA->exp, Outlist);
 
-            pA = pA->next;
-            pB = pB->next;
-            free(Alist->head);
-            free(Blist->head);
-            Alist->head = pA;
-            Blist->head = pB;
+            if (pA->next != NULL) {
+                pA = pA->next;
+                free(Alist->head);
+                Alist->head = pA;
+            } else {
+                isAleft = 0;
+                free(Alist->head);
+            }
+
+            if (pB->next != NULL) {
+                pB = pB->next;
+                free(Blist->head);
+                Blist->head = pB;
+            } else {
+                isBleft = 0;
+                free(Blist->head);
+            }
             continue;
         }
-        if(pA->exp < pB->exp){
+        if ((pA->exp < pB->exp) || !isBleft) {
             AddtoOutlist(pA->coefficient, pA->exp, Outlist);
-            pA = pA->next;
-            free(Alist->head);
-            Alist->head = pA;
+            if (pA->next != NULL) {
+                pA = pA->next;
+                free(Alist->head);
+                Alist->head = pA;
+            } else {
+                isAleft = 0;
+                free(Alist->head);
+            }
             continue;
         }
-        if(pA->exp > pB->exp){
+        if ((pA->exp > pB->exp) || !isAleft) {
             AddtoOutlist(pB->coefficient, pB->exp, Outlist);
-            pB = pB->next;
-            free(Blist->head);
-            Blist->head = pB;
+            if (pB->next != NULL) {
+                pB = pB->next;
+                free(Blist->head);
+                Blist->head = pB;
+            } else {
+                isBleft = 0;
+                free(Blist->head);
+            }
             continue;
         }
     }
@@ -101,7 +124,7 @@ int main() {
 //    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+2x^4+7x^7+8x^9 2x^0+2x^5+1x^7+1x^9
-//    1x^0+2x^4+7x^7+8x^9 0x^0 错误
+//    1x^0+2x^4+7x^7+8x^9 0x^0
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist, A);
