@@ -53,16 +53,26 @@ void AddtoOutlist(int coefficient, int exp, list *plist) {
 void Add(list *Alist, list *Blist, list *Outlist) {
     Outlist->head = Outlist->tail = NULL;
     term *pA = Alist->head, *pB = Blist->head;
-    while (pA && pB) {
+    while (pA || pB) {
         if (pA->exp == pB->exp) {
             AddtoOutlist(pA->coefficient + pB->coefficient, pA->exp, Outlist);
 
             pA = pA->next;
             pB = pB->next;
+            continue;
 //            free(Alist->head);
 //            free(Blist->head);
 //            Alist->head = pA;
-//            Blist->head = pB;
+        }//            Blist->head = pB;
+        if(pA->exp < pB->exp){
+            AddtoOutlist(pA->coefficient, pA->exp, Outlist);
+            pA = pA->next;
+            continue;
+        }
+        if(pA->exp > pB->exp){
+            AddtoOutlist(pB->coefficient, pB->exp, Outlist);
+            pB = pB->next;
+            continue;
         }
     }
 }
@@ -81,9 +91,11 @@ void Output(list *plist) {
 int main() {
     char A[10000], B[10000];//m：总人数 n：出列序号
     scanf("%s %s", &A, &B);
-//    puts(A);//1x^0+7x^7+8x^9
+//    puts(A);//1x^0+2x^4+7x^7+8x^9
 //    puts(B);//2x^0+1x^7+1x^9
+//    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
+//    1x^0+2x^4+7x^7+8x^9 2x^0+2x^5+1x^7+1x^9
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist, A);
