@@ -59,19 +59,24 @@ void Add(list *Alist, list *Blist, list *Outlist) {
 
             pA = pA->next;
             pB = pB->next;
+            free(Alist->head);
+            free(Blist->head);
+            Alist->head = pA;
+            Blist->head = pB;
             continue;
-//            free(Alist->head);
-//            free(Blist->head);
-//            Alist->head = pA;
-        }//            Blist->head = pB;
+        }
         if(pA->exp < pB->exp){
             AddtoOutlist(pA->coefficient, pA->exp, Outlist);
             pA = pA->next;
+            free(Alist->head);
+            Alist->head = pA;
             continue;
         }
         if(pA->exp > pB->exp){
             AddtoOutlist(pB->coefficient, pB->exp, Outlist);
             pB = pB->next;
+            free(Blist->head);
+            Blist->head = pB;
             continue;
         }
     }
@@ -96,6 +101,7 @@ int main() {
 //    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+2x^4+7x^7+8x^9 2x^0+2x^5+1x^7+1x^9
+//    1x^0+2x^4+7x^7+8x^9 0x^0 错误
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist, A);
