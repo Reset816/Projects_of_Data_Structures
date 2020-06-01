@@ -15,12 +15,11 @@ typedef struct _list {
 } list;
 
 void CreateLinkedList(list *plist, char arry[10000]) {
-    int i;
-    i = 0;
 
     plist->head = plist->tail = NULL;
     char coefficient, exp;
-    while (1) {
+    for (int i = 0; arry[i] != '\0'; i = i + 5) {//移到下一项
+
         coefficient = arry[i] - '0';
         exp = arry[i + 3] - '0';
         term *p = (term *) malloc(sizeof(term));
@@ -34,15 +33,8 @@ void CreateLinkedList(list *plist, char arry[10000]) {
             plist->head = p;
             plist->tail = p;
         }
-
-        if (arry[i + 4] == '\0') {//如果下一位不是字符串最后一项
-            //printf("%d", i);
-            break;
-        }
-        i = i + 5;//移到下一项
     }
-    scanf("%s", &i);
-};
+}
 
 int main() {
     char A[10000], B[10000];//m：总人数 n：出列序号
