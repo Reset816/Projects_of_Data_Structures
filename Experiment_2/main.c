@@ -5,7 +5,7 @@
 
 typedef struct Node {
     int coefficient;//系数
-    int exp;
+    int exp;//指数
     struct Node *next;
 } term;
 
@@ -117,7 +117,7 @@ void Output(list *plist) {
 }
 
 int main() {
-    char A[10000], B[10000];//m：总人数 n：出列序号
+    char A[10000], B[10000];
     scanf("%s %s", &A, &B);
 //    puts(A);//1x^0+2x^4+7x^7+8x^9
 //    puts(B);//2x^0+1x^7+1x^9
