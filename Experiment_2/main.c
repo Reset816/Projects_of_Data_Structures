@@ -14,24 +14,37 @@ typedef struct _list {
     term *tail;
 } list;
 
-void CreateLinkedList(list *plist, char arry[10000]) {
-
+void CreateLinkedList(list *plist) {
     plist->head = plist->tail = NULL;
-    char coefficient, exp;
-    for (int i = 0; arry[i] != '\0'; i = i + 5) {//移到下一项
+    int coefficient, exp;
+    char tmp = 0;
+    int count = 1;
+    while (1) {
+        //8x^9+7x^7+1x^0 count=1是系数，count=4是指数
+        if (tmp != ' ' && tmp != '\n') {
+            tmp = getchar();
+            if (count == 1)
+                coefficient = tmp - '0';
+            if (count == 4) {
+                count = 0;
+                exp = tmp - '0';
+                tmp = getchar();//读取后面的符号已便于下一项
+                term *p = (term *) malloc(sizeof(term));
+                p->coefficient = coefficient;
+                p->exp = exp;
+                p->next = NULL;
+                if (plist->tail) {
+                    plist->tail->next = p;
+                    plist->tail = p;
+                } else {
+                    plist->head = p;
+                    plist->tail = p;
+                }
+            }
+            count++;
 
-        coefficient = arry[i] - '0';
-        exp = arry[i + 3] - '0';
-        term *p = (term *) malloc(sizeof(term));
-        p->coefficient = coefficient;
-        p->exp = exp;
-        p->next = NULL;
-        if (plist->tail) {
-            plist->tail->next = p;
-            plist->tail = p;
         } else {
-            plist->head = p;
-            plist->tail = p;
+            return;
         }
     }
 }
@@ -119,8 +132,8 @@ void Output(list *plist) {
 }
 
 int main() {
-    char A[10000], B[10000];
-    scanf("%s %s", &A, &B);
+    //char A[10000], B[10000];
+    //scanf("%s %s", &A, &B);
 //    puts(A);//1x^0+2x^4+7x^7+8x^9
 //    puts(B);//2x^0+1x^7+1x^9
 //    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
@@ -132,10 +145,11 @@ int main() {
 
     //3x^5+7x^3+1x^0 1x^5+1x^3+2x^0+8x^0
     //8x^9+7x^7+2x^4+1x^0 1x^0
+    //8x^9+7x^7+2x^4+1x^0 8x^9+7x^7+2x^4+1x^0
     list Alist, Blist, Outlist;
 
-    CreateLinkedList(&Alist, A);
-    CreateLinkedList(&Blist, B);
+    CreateLinkedList(&Alist);
+    CreateLinkedList(&Blist);
     Add(&Alist, &Blist, &Outlist);
     Output(&Outlist);
     return 0;
