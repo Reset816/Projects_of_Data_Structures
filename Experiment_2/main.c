@@ -40,6 +40,10 @@ void CreateLinkedList(list *plist) {
         if (tmp != ' ' && tmp != '\n') {
             tmpforSign = tmp;//需要多一个变量来存数字前一个（即正负号）
             tmp = getchar();
+            //特殊情况，如果第一个字符为负号
+            if (count == 1 && tmp == '-')
+                continue;
+            //特殊情况，如果第一个字符为负号
             if (count % 5 == 1)
                 if (tmpforSign == '-')
                     coefficient = (tmp - '0') * (-1);
