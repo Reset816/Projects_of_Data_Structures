@@ -32,22 +32,21 @@ void CreateLinkedList(list *plist) {
     plist->head = plist->tail = NULL;
     int coefficient, exp;
     char tmp = 0;
-    char tmpforSign = 0;
+    char tmpforSign = 0;//需要多一个变量来存数字前一个（即正负号）
     int count = 1;
+
     while (1) {
-        //8x^9+7x^7+1x^0 count=1是系数，count=4是指数
+        //8x^9+7x^7+1x^0 count=1是系数，count=4是指数,count=6是系数，count=9是指数
         if (tmp != ' ' && tmp != '\n') {
             tmpforSign = tmp;//需要多一个变量来存数字前一个（即正负号）
             tmp = getchar();
-            if (count == 1)
+            if (count % 5 == 1)
                 if (tmpforSign == '-')
                     coefficient = (tmp - '0') * (-1);
                 else
                     coefficient = (tmp - '0') * 1;
-            if (count == 4) {
-                count = 0;
+            if (count % 5 == 4) {
                 exp = tmp - '0';
-                tmp = getchar();//读取后面的符号已便于下一项
                 AddTerm(coefficient, exp, plist);
             }
             count++;
