@@ -14,6 +14,20 @@ typedef struct _list {
     term *tail;
 } list;
 
+void AddTerm(int coefficient, int exp, list *plist) {
+    term *p = (term *) malloc(sizeof(term));
+    p->coefficient = coefficient;
+    p->exp = exp;
+    p->next = NULL;
+    if (plist->tail) {
+        plist->tail->next = p;
+        plist->tail = p;
+    } else {
+        plist->head = p;
+        plist->tail = p;
+    }
+}
+
 void CreateLinkedList(list *plist) {
     plist->head = plist->tail = NULL;
     int coefficient, exp;
@@ -29,37 +43,13 @@ void CreateLinkedList(list *plist) {
                 count = 0;
                 exp = tmp - '0';
                 tmp = getchar();//读取后面的符号已便于下一项
-                term *p = (term *) malloc(sizeof(term));
-                p->coefficient = coefficient;
-                p->exp = exp;
-                p->next = NULL;
-                if (plist->tail) {
-                    plist->tail->next = p;
-                    plist->tail = p;
-                } else {
-                    plist->head = p;
-                    plist->tail = p;
-                }
+                AddTerm(coefficient, exp, plist);
             }
             count++;
 
         } else {
             return;
         }
-    }
-}
-
-void AddtoOutlist(int coefficient, int exp, list *plist) {
-    term *p = (term *) malloc(sizeof(term));
-    p->coefficient = coefficient;
-    p->exp = exp;
-    p->next = NULL;
-    if (plist->tail) {
-        plist->tail->next = p;
-        plist->tail = p;
-    } else {
-        plist->head = p;
-        plist->tail = p;
     }
 }
 
@@ -71,7 +61,7 @@ void Add(list *Alist, list *Blist, list *Outlist) {
     while (isAleft || isBleft) {
         if ((pA->exp < pB->exp) || !isAleft) {//!isAleft即A空了，就输出B
             //if (pA->exp < pB->exp) {
-            AddtoOutlist(pB->coefficient, pB->exp, Outlist);
+            AddTerm(pB->coefficient, pB->exp, Outlist);
             if (pB->next != NULL) {
                 pB = pB->next;
                 free(Blist->head);
@@ -84,7 +74,7 @@ void Add(list *Alist, list *Blist, list *Outlist) {
         }
         if ((pA->exp > pB->exp) || !isBleft) {//!isBleft即B空了，就输出A
             //if (pA->exp > pB->exp) {
-            AddtoOutlist(pA->coefficient, pA->exp, Outlist);
+            AddTerm(pA->coefficient, pA->exp, Outlist);
             if (pA->next != NULL) {
                 pA = pA->next;
                 free(Alist->head);
@@ -96,7 +86,7 @@ void Add(list *Alist, list *Blist, list *Outlist) {
             continue;
         }
         if (pA->exp == pB->exp) {
-            AddtoOutlist(pA->coefficient + pB->coefficient, pA->exp, Outlist);
+            AddTerm(pA->coefficient + pB->coefficient, pA->exp, Outlist);
 
             if (pA->next != NULL) {
                 pA = pA->next;
@@ -120,7 +110,6 @@ void Add(list *Alist, list *Blist, list *Outlist) {
     }
 }
 
-
 void Output(list *plist) {
     term *p;
     for (p = plist->head; p != NULL; p = p->next) {
@@ -132,20 +121,17 @@ void Output(list *plist) {
 }
 
 int main() {
-    //char A[10000], B[10000];
-    //scanf("%s %s", &A, &B);
+//    char A[10000], B[10000];
+//    scanf("%s %s", &A, &B);
 //    puts(A);//1x^0+2x^4+7x^7+8x^9
 //    puts(B);//2x^0+1x^7+1x^9
 //    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
 //    1x^0+2x^4+7x^7+8x^9 2x^0+2x^5+1x^7+1x^9
 //    2x^4+1x^0 1x^1
-
-
-
-    //3x^5+7x^3+1x^0 1x^5+1x^3+2x^0+8x^0
-    //8x^9+7x^7+2x^4+1x^0 1x^0
-    //8x^9+7x^7+2x^4+1x^0 8x^9+7x^7+2x^4+1x^0
+//    3x^5+7x^3+1x^0 1x^5+1x^3+2x^0+8x^0
+//    8x^9+7x^7+2x^4+1x^0 1x^0
+//    8x^9+7x^7+2x^4+1x^0 8x^9+7x^7+2x^4+1x^0
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist);
