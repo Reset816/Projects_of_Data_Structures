@@ -239,11 +239,20 @@ int main() {
 //    3x^5+7x^3+1x^0 2x^0 6x^5+14x^3+2x^0
 //    3x^5+7x^3+1x^0 2x^1 6x^6+14x^4+2x^1
     list Alist, Blist, Outlist;
-
+    int flag;
+    printf("Select Mode(1 Addition; 2 Subtraction; 3 Multiplication):\n");
+    scanf("%d", &flag);
+    getchar();
+    printf("Type in the multinomial:\n");
     CreateLinkedList(&Alist);
     CreateLinkedList(&Blist);
-    //Subtraction(&Alist, &Blist, &Outlist);
-    Multiplication(&Alist, &Blist, &Outlist);
+    if (flag == 1) {
+        Addition(&Alist, &Blist, &Outlist);
+    } else if (flag == 2) {
+        Subtraction(&Alist, &Blist, &Outlist);
+    } else if (flag == 3) {
+        Multiplication(&Alist, &Blist, &Outlist);
+    }
     Output(&Outlist);
     return 0;
 }
