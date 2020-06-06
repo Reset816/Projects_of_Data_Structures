@@ -175,6 +175,31 @@ void Subtraction(list *Alist, list *Blist, list *Outlist) {//多项式减法 A-B
     }
 }
 
+void MergeTerm(list *plist) {//合并指数项相同的项
+    term *p, *q, *tmp;//tmp是q的前一项，便于删除q
+    for (p = plist->head; p != NULL; p = p->next) {
+        for (q = p->next, tmp = p; q != NULL; tmp = q, q = q->next) {
+            if (p->exp == q->exp) {
+                p->coefficient += q->coefficient;
+                tmp->next = q->next;
+                free(q);
+                q = tmp;
+            }
+        }
+    }
+}
+
+void Multiplication(list *Alist, list *Blist, list *Outlist) {//多项式乘法 A*B
+    Outlist->head = Outlist->tail = NULL;
+    term *pA, *pB;
+    for (pA = Alist->head; pA != NULL; pA = pA->next) {
+        for (pB = Blist->head; pB != NULL; pB = pB->next) {
+            AddTerm(pA->coefficient * pB->coefficient, pA->exp + pB->exp, Outlist);
+        }
+    }
+    MergeTerm(Outlist);
+}
+
 void Output(list *plist) {
     term *p;
     for (p = plist->head; p != NULL; p = p->next) {
@@ -206,13 +231,19 @@ int main() {
 
 //    3x^5+7x^3+1x^0 1x^5-1x^3+2x^1+8x^0
 //    减法样例
-//    3x^5+7x^3+1x^0 5x^5+7x^3+2x^0
-//    3x^5+7x^3+1x^0 2x^0
+//    3x^5+7x^3+1x^0 5x^5+7x^3+2x^0 -2x^5-1x^0
+//    3x^5+7x^3+1x^0 2x^0 3x^5+7x^3-1x^0
+//    乘法样例
+//    1x^1+1x^0 1x^1+1x^0 1x^2+2x^1+1x^0
+//    1x^1+1x^0 1x^2+2x^1+1x^0 1x^3+3x^2+3x^1+1x^0
+//    3x^5+7x^3+1x^0 2x^0 6x^5+14x^3+2x^0
+//    3x^5+7x^3+1x^0 2x^1 6x^6+14x^4+2x^1
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist);
     CreateLinkedList(&Blist);
-    Subtraction(&Alist, &Blist, &Outlist);
+    //Subtraction(&Alist, &Blist, &Outlist);
+    Multiplication(&Alist, &Blist, &Outlist);
     Output(&Outlist);
     return 0;
 }
