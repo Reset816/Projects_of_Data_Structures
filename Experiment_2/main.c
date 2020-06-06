@@ -254,3 +254,27 @@ int main() {
     Output(&Outlist);
     return 0;
 }
+
+void AdditionMethod2(list *Alist, list *Blist, list *Outlist) {//多项式减加法 A+B
+    Outlist->head = Outlist->tail = NULL;
+    term *p;
+    for (p = Alist->head; p != NULL; p = p->next) {
+        AddTerm(p->coefficient, p->exp, Outlist);
+    }
+    for (p = Blist->head; p != NULL; p = p->next) {
+        AddTerm(p->coefficient, p->exp, Outlist);
+    }
+    MergeTerm(Outlist);
+}
+
+void SubtractionMethod2(list *Alist, list *Blist, list *Outlist) {//多项式减法 A-B
+    Outlist->head = Outlist->tail = NULL;
+    term *p;
+    for (p = Alist->head; p != NULL; p = p->next) {
+        AddTerm(p->coefficient, p->exp, Outlist);
+    }
+    for (p = Blist->head; p != NULL; p = p->next) {
+        AddTerm(p->coefficient * -1, p->exp, Outlist);
+    }
+    MergeTerm(Outlist);
+}
