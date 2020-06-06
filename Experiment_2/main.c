@@ -202,9 +202,12 @@ void Multiplication(list *Alist, list *Blist, list *Outlist) {//多项式乘法 
 
 void Output(list *plist) {
     term *p;
+    bool isOutput = 0;
     for (p = plist->head; p != NULL; p = p->next) {
-        if (p->coefficient)
+        if (p->coefficient) {
             printf("%dx^%d", p->coefficient, p->exp);
+            isOutput = 1;
+        }
 
         if (p->next != NULL) {
             if (p->next->coefficient > 0)
@@ -214,22 +217,17 @@ void Output(list *plist) {
 //                printf("-");数字自带负号，不需要单独输出负号了
         }
     }
+    if (isOutput == false) {//如果没有输出任何东西，即所有项为0
+        printf("0");
+    }
 }
 
 int main() {
-//    char A[10000], B[10000];
-//    scanf("%s %s", &A, &B);
-//    puts(A);//1x^0+2x^4+7x^7+8x^9
-//    puts(B);//2x^0+1x^7+1x^9
-//    1x^0+2x^4+7x^7+8x^9 2x^0+1x^7+1x^9
-//    1x^0+7x^7+8x^9 2x^0+1x^7+1x^9
-//    1x^0+2x^4+7x^7+8x^9 2x^0+2x^5+1x^7+1x^9
-//    2x^4+1x^0 1x^1
-//    3x^5+7x^3+1x^0 1x^5+1x^3+2x^0+8x^0
-//    8x^9+7x^7+2x^4+1x^0 1x^0
-//    8x^9+7x^7+2x^4+1x^0 8x^9+7x^7+2x^4+1x^0
-
+//    加法样例
 //    3x^5+7x^3+1x^0 1x^5-1x^3+2x^1+8x^0
+//    1x^4+1x^2+1x^0 1x^5+1x^3-1x^2+1x^0
+//    3x^5+7x^3+1x^0 -3x^5-7x^3-1x^0
+
 //    减法样例
 //    3x^5+7x^3+1x^0 5x^5+7x^3+2x^0 -2x^5-1x^0
 //    3x^5+7x^3+1x^0 2x^0 3x^5+7x^3-1x^0
@@ -240,10 +238,10 @@ int main() {
 //    3x^5+7x^3+1x^0 2x^1 6x^6+14x^4+2x^1
     list Alist, Blist, Outlist;
     int flag;
-    printf("Select Mode(1 Addition; 2 Subtraction; 3 Multiplication):\n");
+    printf("Select Mode:\n1: Addition; 2: Subtraction; 3: Multiplication\n");
     scanf("%d", &flag);
     getchar();
-    printf("Type in the multinomial:\n");
+    printf("Type in the Multinomial:\n");
     CreateLinkedList(&Alist);
     CreateLinkedList(&Blist);
     if (flag == 1) {
