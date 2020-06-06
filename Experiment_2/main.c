@@ -61,7 +61,7 @@ void CreateLinkedList(list *plist) {
     }
 }
 
-void Add(list *Alist, list *Blist, list *Outlist) {
+void Addition(list *Alist, list *Blist, list *Outlist) {//多项式加法 A+B
     Outlist->head = Outlist->tail = NULL;
     term *pA = Alist->head, *pB = Blist->head;
     bool isAleft = 1;
@@ -118,12 +118,75 @@ void Add(list *Alist, list *Blist, list *Outlist) {
     }
 }
 
+void Subtraction(list *Alist, list *Blist, list *Outlist) {//多项式减法 A-B
+    Outlist->head = Outlist->tail = NULL;
+    term *pA = Alist->head, *pB = Blist->head;
+    bool isAleft = 1;
+    bool isBleft = 1;
+    while (isAleft || isBleft) {
+        if ((pA->exp < pB->exp) || !isAleft) {//!isAleft即A空了，就输出B
+            //if (pA->exp < pB->exp) {
+            AddTerm(pB->coefficient * -1, pB->exp, Outlist);
+            if (pB->next != NULL) {
+                pB = pB->next;
+                free(Blist->head);
+                Blist->head = pB;
+            } else {
+                isBleft = 0;
+                free(Blist->head);
+            }
+            continue;
+        }
+        if ((pA->exp > pB->exp) || !isBleft) {//!isBleft即B空了，就输出A
+            //if (pA->exp > pB->exp) {
+            AddTerm(pA->coefficient, pA->exp, Outlist);
+            if (pA->next != NULL) {
+                pA = pA->next;
+                free(Alist->head);
+                Alist->head = pA;
+            } else {
+                isAleft = 0;
+                free(Alist->head);
+            }
+            continue;
+        }
+        if (pA->exp == pB->exp) {
+            AddTerm(pA->coefficient - pB->coefficient, pA->exp, Outlist);
+
+            if (pA->next != NULL) {
+                pA = pA->next;
+                free(Alist->head);
+                Alist->head = pA;
+            } else {
+                isAleft = 0;
+                free(Alist->head);
+            }
+
+            if (pB->next != NULL) {
+                pB = pB->next;
+                free(Blist->head);
+                Blist->head = pB;
+            } else {
+                isBleft = 0;
+                free(Blist->head);
+            }
+            continue;
+        }
+    }
+}
+
 void Output(list *plist) {
     term *p;
     for (p = plist->head; p != NULL; p = p->next) {
-        printf("%dx^%d", p->coefficient, p->exp);
+        if (p->coefficient)
+            printf("%dx^%d", p->coefficient, p->exp);
+
         if (p->next != NULL) {
-            printf("+");
+            if (p->next->coefficient > 0)
+                printf("+");
+//                遇到系数为0的项不输出
+//            else if (p->next->coefficient < 0);
+//                printf("-");数字自带负号，不需要单独输出负号了
         }
     }
 }
@@ -142,11 +205,14 @@ int main() {
 //    8x^9+7x^7+2x^4+1x^0 8x^9+7x^7+2x^4+1x^0
 
 //    3x^5+7x^3+1x^0 1x^5-1x^3+2x^1+8x^0
+//    减法样例
+//    3x^5+7x^3+1x^0 5x^5+7x^3+2x^0
+//    3x^5+7x^3+1x^0 2x^0
     list Alist, Blist, Outlist;
 
     CreateLinkedList(&Alist);
     CreateLinkedList(&Blist);
-    Add(&Alist, &Blist, &Outlist);
+    Subtraction(&Alist, &Blist, &Outlist);
     Output(&Outlist);
     return 0;
 }
