@@ -241,7 +241,7 @@ int main() {
     printf("Select Mode:\n1: Addition; 2: Subtraction; 3: Multiplication\n");
     scanf("%d", &flag);
     getchar();
-    printf("Type in the Multinomial:\n");
+    printf("Type in the Multinomial\nFor Example:\n3x^5+7x^3+1x^0 -3x^5-7x^3-1x^0\n");
     CreateLinkedList(&Alist);
     CreateLinkedList(&Blist);
     if (flag == 1) {
