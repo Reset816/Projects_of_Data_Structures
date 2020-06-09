@@ -227,7 +227,6 @@ int main() {
 //    3x^5+7x^3+1x^0 1x^5-1x^3+2x^1+8x^0
 //    1x^4+1x^2+1x^0 1x^5+1x^3-1x^2+1x^0
 //    3x^5+7x^3+1x^0 -3x^5-7x^3-1x^0
-
 //    减法样例
 //    3x^5+7x^3+1x^0 5x^5+7x^3+2x^0 -2x^5-1x^0
 //    3x^5+7x^3+1x^0 2x^0 3x^5+7x^3-1x^0
@@ -237,6 +236,9 @@ int main() {
 //    3x^5+7x^3+1x^0 2x^0 6x^5+14x^3+2x^0
 //    3x^5+7x^3+1x^0 2x^1 6x^6+14x^4+2x^1
     list Alist, Blist, Outlist;
+    Alist.tail = NULL;
+    Blist.tail = NULL;
+    Outlist.tail = NULL;
     int flag;
     printf("Select Mode:\n1: Addition; 2: Subtraction; 3: Multiplication\n");
     scanf("%d", &flag);
