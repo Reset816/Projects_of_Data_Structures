@@ -3,8 +3,8 @@
 
 typedef struct lineStack {
     int data;
-    struct lineStack *next;
-    struct lineStack *previous;
+    struct lineStack *up;
+    struct lineStack *down;
 } lineStack;
 
 typedef struct Stack {
@@ -15,10 +15,11 @@ typedef struct Stack {
 void push(Stack *plist, int a) {
     lineStack *p = (lineStack *) malloc(sizeof(lineStack));
     p->data = a;
-    p->next = NULL;
-    if (plist->buttom) {
-        plist->buttom->next = p;
-        plist->buttom = p;
+    p->up = NULL;
+    p->down = plist->top;
+    if (plist->top) {
+        plist->top->up = p;
+        plist->top = p;
     } else {
         plist->top = p;
         plist->buttom = p;
@@ -26,11 +27,15 @@ void push(Stack *plist, int a) {
 }
 
 void pop(Stack *plist) {
-    if (plist) {
+    if (plist->top) {
         lineStack *p = plist->top;
-        printf("pop element:%d ", p->data);
-        p->previous->next = NULL;
-        plist->top = p->previous;
+        printf("pop element:%d\n", p->data);
+        if (p->down) {
+            p->down->up = NULL;
+            plist->top = p->down;
+        } else {
+            plist->top = NULL;
+        }
         free(p);
     } else {
         printf("no element in stack");
@@ -40,13 +45,13 @@ void pop(Stack *plist) {
 int main() {
     printf("Type in the Arithmetic Expression\nFor Example:\n1+3*4-6/2\n");
     Stack TEST;
-    TEST.buttom = NULL;
+    TEST.top = NULL;
     push(&TEST, 1);
     push(&TEST, 2);
     push(&TEST, 3);
-//    pop(&TEST);
-//    pop(&TEST);
-//    pop(&TEST);
-//    pop(&TEST);
+    pop(&TEST);
+    pop(&TEST);
+    pop(&TEST);
+    pop(&TEST);
     return 0;
 }
