@@ -92,21 +92,17 @@ void convert(Stack *plist) {
         tmp = getchar();
         if (tmp != '\n') {
             if (isInOP(tmp)) {//如果读入的是运算符
-                if (isEmpty(plist)) {//栈为空
-                    push(plist, tmp);
-                } else {//栈不为空
-                    //弹出所有优先级大于或等于该运算符的栈顶元素，然后将该运算符入栈，遇到左括号时不能再弹出
-                    while (plist->top != '(' && plist->top != NULL) {
-                        if (ComparePriority(plist->top->data, tmp) == '>' ||
-                            ComparePriority(plist->top->data, tmp) == '=') {
-                            printf("%c", plist->top->data);
-                            pop(plist);
-                        } else {
-                            break;
-                        }
+                //弹出所有优先级大于或等于该运算符的栈顶元素，然后将该运算符入栈，遇到左括号时不能再弹出
+                while (plist->top != '(' && plist->top != NULL) {
+                    if (ComparePriority(plist->top->data, tmp) == '>' ||
+                        ComparePriority(plist->top->data, tmp) == '=') {
+                        printf("%c", plist->top->data);
+                        pop(plist);
+                    } else {
+                        break;
                     }
-                    push(plist, tmp);
                 }
+                push(plist, tmp);
             } else if (tmp == '(') {//如果读入的是左括号
                 push(plist, tmp);
             } else if (tmp == ')') {//如果读入的是右括号
