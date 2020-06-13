@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 typedef struct lineStack {
-    int data;
+    char data;
     struct lineStack *up;
     struct lineStack *down;
 } lineStack;
@@ -86,7 +86,7 @@ bool isEmpty(Stack *plist) {
     }
 }
 
-void convert(Stack *plist) {
+void convert(Stack *plist, Stack *post) {
     char tmp;
     while (1) {
         tmp = getchar();
@@ -96,7 +96,7 @@ void convert(Stack *plist) {
                 while (plist->top != '(' && plist->top != NULL) {
                     if (ComparePriority(plist->top->data, tmp) == '>' ||
                         ComparePriority(plist->top->data, tmp) == '=') {
-                        printf("%c", plist->top->data);
+                        push(post, plist->top->data);
                         pop(plist);
                     } else {
                         break;
@@ -112,30 +112,49 @@ void convert(Stack *plist) {
                     if (tmp == '(') {
                         break;
                     }
-                    printf("%c", tmp);
+                    push(post, tmp);
                 }
             } else {//如果读入的是数字
-                printf("%c", tmp);
+                push(post, tmp);
             }
         } else {
             break;
         }
     }
     while (plist->top != NULL) {
-        printf("%c", pop(plist));
+        push(post, pop(plist));
     }
 }
 
+
 char Operate(char theta, char a, char b) {
+    int x = a - '0';
+    int y = b - '0';
     if (theta == '+') {
-        return (a + b) + '0';
-    } else if (b == '-') {
-        return (a - b) + '0';
-    } else if (b == '*') {
-        return (a * b) + '0';
-    } else if (b == '/') {
-        return (a / b) + '0';
+        return (x + y) + '0';
+    } else if (theta == '-') {
+        return (x - y) + '0';
+    } else if (theta == '*') {
+        return (x * y) + '0';
+    } else if (theta == '/') {
+        return (x / y) + '0';
     }
+}
+
+void compute(Stack *post, Stack *result) {
+    char tmp;
+    char a, b;
+    while (!isEmpty(post)) {
+        tmp = pop(post);
+        if (isInOP(tmp)) {
+            a = pop(result);
+            b = pop(result);
+            push(result, Operate(tmp, a, b));
+        } else {
+            push(result, tmp);
+        }
+    }
+    printf("%d", result->top - '0');
 }
 
 void scan(Stack *pOPTR, Stack *pOPND) {
@@ -171,10 +190,28 @@ void scan(Stack *pOPTR, Stack *pOPND) {
 
 int main() {
     //printf("Type in the Arithmetic Expression\nFor Example:\n1+3*4-6/2\n");
-    Stack OPTR, OPTD;
+    Stack OPTR, OPTD, tmp, post, result;
     OPTR.top = NULL;
     OPTD.top = NULL;
+    tmp.top = NULL;
+    post.top = NULL;
+    result.top = NULL;
     //scan(&OPTR, &OPTD);
-    convert(&OPTR);
+    //convert(&OPTR, &post);
+    push(&tmp, '6');
+    push(&tmp, '5');
+    push(&tmp, '2');
+    push(&tmp, '3');
+    push(&tmp, '+');
+    push(&tmp, '8');
+    push(&tmp, '*');
+    push(&tmp, '+');
+    push(&tmp, '3');
+    push(&tmp, '+');
+    push(&tmp, '*');
+    while (!isEmpty(&tmp)) {
+        push(&post, pop(&tmp));
+    }
+    compute(&post, &result);
     return 0;
 }
