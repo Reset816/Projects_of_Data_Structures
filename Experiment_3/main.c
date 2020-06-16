@@ -5,6 +5,7 @@
 //char爆掉的问题
 typedef struct lineStack {
     int data;
+    bool isOP;
     struct lineStack *up;
     struct lineStack *down;
 } lineStack;
@@ -98,6 +99,7 @@ void convert(Stack *plist, Stack *post) {
                     if (ComparePriority(plist->top->data, tmp) == '>' ||
                         ComparePriority(plist->top->data, tmp) == '=') {
                         push(post, plist->top->data);
+                        post->top->isOP = true;
                         pop(plist);
                     } else {
                         break;
@@ -114,9 +116,11 @@ void convert(Stack *plist, Stack *post) {
                         break;
                     }
                     push(post, tmp);
+                    post->top->isOP = true;
                 }
             } else {//如果读入的是数字
                 push(post, tmp - '0');
+                post->top->isOP = false;
             }
         } else {
             break;
@@ -124,6 +128,7 @@ void convert(Stack *plist, Stack *post) {
     }
     while (plist->top != NULL) {
         push(post, pop(plist));
+        post->top->isOP = true;
     }
 }
 
@@ -154,9 +159,12 @@ int Operate(char theta, int a, int b) {
 void compute(Stack *post, Stack *result) {
     int tmp;
     int a, b;
+    bool isOP;
     while (!isEmpty(post)) {
+        isOP = post->top->isOP;
         tmp = pop(post);
-        if (isInOP(tmp)) {
+        //printf("%d", isOP);
+        if (isOP) {
             a = pop(result);
             b = pop(result);
             push(result, Operate(tmp, b, a));
@@ -220,7 +228,9 @@ int main() {
 //    push(&tmp, 43);
 //    push(&tmp, 42);
     while (!isEmpty(&tmp)) {
+        bool tmpOP = tmp.top->isOP;
         push(&post, pop(&tmp));
+        post.top->isOP = tmpOP;
     }
     compute(&post, &result);
     return 0;
