@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
+#include <math.h>
 
 //char爆掉的问题
 typedef struct lineStack {
@@ -49,7 +50,7 @@ int pop(Stack *plist) {
 }
 
 bool isInOP(char tmp) {
-    if (tmp == '+' || tmp == '-' || tmp == '*' || tmp == '/') {
+    if (tmp == '+' || tmp == '-' || tmp == '*' || tmp == '/' || tmp == '^') {
         return true;
     } else {
         return false;
@@ -76,6 +77,12 @@ char ComparePriority(char a, char b) {
             return '<';
         } else {
             return '>';
+        }
+    } else if (b == '^') {
+        if (a == ')') {
+            return '>';
+        } else {
+            return '<';
         }
     }
 }
@@ -153,7 +160,10 @@ int Operate(char theta, int a, int b) {
         return a * b;
     } else if (theta == '/') {
         return a / b;
+    } else if (theta == '^') {
+        return pow(a, b);
     }
+
 }
 
 void compute(Stack *post, Stack *result) {
@@ -207,6 +217,10 @@ void scan(Stack *pOPTR, Stack *pOPND) {
 }
 
 int main() {
+    //样例
+    //输入：3*(5-2)+7 结果：16
+    //输入：(3*(5-2)+7)^2 结果：256
+
     printf("Type in the Arithmetic Expression\nFor Example:\n3*(5-2)+7\n");
     Stack OPTR, OPTD, tmp, post, result;
     OPTR.top = NULL;
