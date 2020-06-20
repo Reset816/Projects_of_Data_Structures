@@ -2,20 +2,21 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <math.h>
-typedef struct lineStack {
+
+typedef struct element {
     int data;
     bool isOP;
-    struct lineStack *up;
-    struct lineStack *down;
-} lineStack;
+    struct element *up;
+    struct element *down;
+} element;
 
 typedef struct Stack {
-    lineStack *top;
-    lineStack *buttom;
+    element *top;
+    element *buttom;
 } Stack;
 
 void push(Stack *plist, int value) {
-    lineStack *p = (lineStack *) malloc(sizeof(lineStack));
+    element *p = (element *) malloc(sizeof(element));
     p->data = value;
     p->up = NULL;
     p->down = plist->top;
@@ -31,7 +32,7 @@ void push(Stack *plist, int value) {
 int pop(Stack *plist) {
     int value;
     if (plist->top) {
-        lineStack *p = plist->top;
+        element *p = plist->top;
         //printf("pop element:%d\n", p->data);
         value = p->data;
         if (p->down) {
