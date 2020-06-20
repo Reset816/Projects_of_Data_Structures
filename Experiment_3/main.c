@@ -139,17 +139,6 @@ void convert(Stack *plist, Stack *post) {
 }
 
 int Operate(char theta, int a, int b) {
-//    int x = a - '0';
-//    int y = b - '0';
-//    if (theta == '+') {
-//        return (x + y) + '0';
-//    } else if (theta == '-') {
-//        return (x - y) + '0';
-//    } else if (theta == '*') {
-//        return (x * y) + '0';
-//    } else if (theta == '/') {
-//        return (x / y) + '0';
-//    }
     if (theta == '+') {
         return a + b;
     } else if (theta == '-') {
