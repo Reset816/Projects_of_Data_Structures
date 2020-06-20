@@ -2,8 +2,6 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <math.h>
-
-//char爆掉的问题
 typedef struct lineStack {
     int data;
     bool isOP;
@@ -49,6 +47,14 @@ int pop(Stack *plist) {
     return value;
 }
 
+bool isEmpty(Stack *plist) {
+    if (plist->top == NULL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 bool isInOP(char tmp) {
     if (tmp == '+' || tmp == '-' || tmp == '*' || tmp == '/' || tmp == '^') {
         return true;
@@ -87,14 +93,6 @@ char ComparePriority(char a, char b) {
     }
 }
 
-bool isEmpty(Stack *plist) {
-    if (plist->top == NULL) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 void convert(Stack *plist, Stack *post) {
     char tmp;
     while (1) {
@@ -102,7 +100,7 @@ void convert(Stack *plist, Stack *post) {
         if (tmp != '\n') {
             if (isInOP(tmp)) {//如果读入的是运算符
                 //弹出所有优先级大于或等于该运算符的栈顶元素，然后将该运算符入栈，遇到左括号时不能再弹出
-                while (plist->top != '(' && plist->top != NULL) {
+                while (!isEmpty(plist) && plist->top->data != '(') {
                     if (ComparePriority(plist->top->data, tmp) == '>' ||
                         ComparePriority(plist->top->data, tmp) == '=') {
                         push(post, plist->top->data);
@@ -139,7 +137,6 @@ void convert(Stack *plist, Stack *post) {
     }
 }
 
-
 int Operate(char theta, int a, int b) {
 //    int x = a - '0';
 //    int y = b - '0';
@@ -163,7 +160,6 @@ int Operate(char theta, int a, int b) {
     } else if (theta == '^') {
         return pow(a, b);
     }
-
 }
 
 void compute(Stack *post, Stack *result) {
@@ -188,32 +184,49 @@ void compute(Stack *post, Stack *result) {
 void scan(Stack *pOPTR, Stack *pOPND) {
     char tmp, theta, a, b;
     while (1) {
-        //8x^9+7x^7+1x^0 count=1是系数，count=4是指数,count=6是系数，count=9是指数
         tmp = getchar();
         if (tmp != '\n') {
             if (isInOP(tmp)) {//如果读入的是运算符
-                switch (ComparePriority(pOPTR->top, tmp)) {
-                    case '<' :
-                        push(pOPTR, tmp);
+                while (!isEmpty(pOPTR) && pOPTR->top->data != '(') {
+                    if (ComparePriority(tmp, pOPTR->top->data) == '>') {
                         break;
-                    case '=' :
-                        break;
-                    case '>' :
+                    } else {
                         theta = pop(pOPTR);
                         a = pop(pOPND);
                         b = pop(pOPND);
-                        push(pOPND, Operate(theta, a, b));
-                        break;
+                        push(pOPND, Operate(theta, b, a));
+                    }
                 }
-
-            } else {//如果读入的不是运算符
-                push(pOPND, tmp);
+                push(pOPTR, tmp);
+            } else if (tmp == '(') {//如果读入的是左括号
+                push(pOPTR, tmp);
+            } else if (tmp == ')') {//如果读入的是右括号
+                //执行出栈操作，并将出栈的元素输出，直到弹出栈的是左括号。左括号也要出栈但不输出；
+                while (1) {
+                    theta = pop(pOPTR);
+                    if (theta == '(') {
+                        break;
+                    }
+                    a = pop(pOPND);
+                    b = pop(pOPND);
+                    push(pOPND, Operate(theta, b, a));
+                }
+            } else {//如果读入的是数字
+                push(pOPND, tmp - '0');
             }
-
         } else {
-            return;
+            break;
         }
     }
+    while (!isEmpty(pOPTR)) {
+        tmp = pop(pOPTR);
+        //printf("%d", isOP);
+
+        a = pop(pOPND);
+        b = pop(pOPND);
+        push(pOPND, Operate(tmp, b, a));
+    }
+    printf("%d", pOPND->top->data);
 }
 
 int main() {
@@ -228,24 +241,19 @@ int main() {
     tmp.top = NULL;
     post.top = NULL;
     result.top = NULL;
-    //scan(&OPTR, &OPTD);
+
+    //method 1 start
     convert(&OPTR, &tmp);
-//    push(&tmp, 6);
-//    push(&tmp, 5);
-//    push(&tmp, 2);
-//    push(&tmp, 3);
-//    push(&tmp, 43);
-//    push(&tmp, 8);
-//    push(&tmp, 42);
-//    push(&tmp, 43);
-//    push(&tmp, 3);
-//    push(&tmp, 43);
-//    push(&tmp, 42);
     while (!isEmpty(&tmp)) {
         bool tmpOP = tmp.top->isOP;
         push(&post, pop(&tmp));
         post.top->isOP = tmpOP;
     }
     compute(&post, &result);
+    //method 1 end
+
+    //method 2 start
+//    scan(&OPTR, &OPTD);
+    //method 2 end
     return 0;
 }
