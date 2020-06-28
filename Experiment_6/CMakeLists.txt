@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(Experiment_6 C)
+project(Experiment_6)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Experiment_6 main.c)
+add_executable(Experiment_6 main.cpp stack.h)
