@@ -9,6 +9,7 @@ typedef struct Node {
     char data;
     struct Node *lchild;
     struct Node *rchild;
+    bool tag = 0;
 } BinaryNode, *BinaryTree;
 
 void CreateBinaryTree(BinaryTree &T) {

@@ -44,3 +44,30 @@ void non_Recursive_PreOrder(BinaryTree &T) {
         }
     } while (!isEmpty(storage_node) || Search_Pointer != NULL);
 }
+
+void non_Recursive_PostOrder(BinaryTree &T) {
+    Stack storage_node;
+
+    BinaryTree Search_Pointer = T;//搜索指针
+    do {
+        while (Search_Pointer != NULL) {//遍历左子树 不把#入栈
+            push(&storage_node, Search_Pointer);
+            Search_Pointer = Search_Pointer->lchild;
+        }
+        if (!isEmpty(storage_node)) {
+            //此时Search_Pointer指向NULL
+            Search_Pointer = storage_node.top->ElementofStack;
+            //此时Search_Pointer指向最底层左结点
+            pop(&storage_node);//退栈
+
+            if (Search_Pointer->tag == 0) {
+                Search_Pointer->tag = 1;
+                push(&storage_node, Search_Pointer);
+                Search_Pointer = Search_Pointer->rchild;
+            } else {
+                Visit(Search_Pointer);
+                Search_Pointer = NULL;
+            }
+        }
+    } while (!isEmpty(storage_node) || Search_Pointer != NULL);
+}
