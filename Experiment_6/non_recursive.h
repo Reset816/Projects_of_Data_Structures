@@ -16,7 +16,7 @@ void non_Recursive_InOrder(BinaryTree &T) {
         }
         if (!isEmpty(storage_node)) {
             //此时Search_Pointer指向NULL
-            Search_Pointer = storage_node.top->ElementofStack;
+            Search_Pointer = storage_node.top->DataofElement;
             //此时Search_Pointer指向最底层左结点
             pop(&storage_node);//退栈
             Visit(Search_Pointer);//访问根
@@ -37,7 +37,7 @@ void non_Recursive_PreOrder(BinaryTree &T) {
         }
         if (!isEmpty(storage_node)) {
             //此时Search_Pointer指向NULL
-            Search_Pointer = storage_node.top->ElementofStack;
+            Search_Pointer = storage_node.top->DataofElement;
             //此时Search_Pointer指向最底层左结点
             pop(&storage_node);
             Search_Pointer = Search_Pointer->rchild;
@@ -56,12 +56,11 @@ void non_Recursive_PostOrder(BinaryTree &T) {
         }
         if (!isEmpty(storage_node)) {
             //此时Search_Pointer指向NULL
-            Search_Pointer = storage_node.top->ElementofStack;
+            Search_Pointer = storage_node.top->DataofElement;
             //此时Search_Pointer指向最底层左结点
             pop(&storage_node);//退栈
-
-            if (Search_Pointer->tag == 0) {
-                Search_Pointer->tag = 1;
+            if (!Search_Pointer->tag) {
+                Search_Pointer->tag = true;
                 push(&storage_node, Search_Pointer);
                 Search_Pointer = Search_Pointer->rchild;
             } else {

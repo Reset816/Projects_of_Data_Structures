@@ -3,20 +3,20 @@
 
 #endif //EXPERIMENT_6_STACK_H
 
-typedef struct element {
-    BinaryTree ElementofStack;
-    struct element *up;
-    struct element *down;
-} element;
+typedef struct ElementofStack {
+    BinaryTree DataofElement;
+    struct ElementofStack *up;
+    struct ElementofStack *down;
+} ElementofStack;
 
 typedef struct Stack {
-    element *top = NULL;
-    element *buttom = NULL;
+    ElementofStack *top = NULL;
+    ElementofStack *buttom = NULL;
 } Stack;
 
 void push(Stack *plist, BinaryTree value) {
-    element *p = (element *) malloc(sizeof(element));
-    p->ElementofStack = value;
+    ElementofStack *p = (ElementofStack *) malloc(sizeof(ElementofStack));
+    p->DataofElement = value;
     p->up = NULL;
     p->down = plist->top;
     if (plist->top) {
@@ -31,14 +31,15 @@ void push(Stack *plist, BinaryTree value) {
 BinaryTree pop(Stack *plist) {
     BinaryTree value;
     if (plist->top) {
-        element *p = plist->top;
-        //printf("pop element:%d\n", p->ElementofStack);
-        value = p->ElementofStack;
+        ElementofStack *p = plist->top;
+        //printf("pop element:%d\n", p->DataofElement);
+        value = p->DataofElement;
         if (p->down) {
             p->down->up = NULL;
             plist->top = p->down;
         } else {
             plist->top = NULL;
+            plist->buttom = NULL;
         }
         free(p);
     } else {

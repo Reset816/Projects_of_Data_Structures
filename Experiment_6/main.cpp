@@ -1,6 +1,7 @@
 #include <cstdio>
 #include "recursive.h"
 #include "non_recursive.h"
+#include "LevelOrder.h"
 
 using namespace std;
 
@@ -30,6 +31,11 @@ void NonRecursiveMethod(BinaryTree test) {
     non_Recursive_PostOrder(test);
 }
 
+void LevelOrderMethod(BinaryTree test) {
+    printf("\nLevelOrder:\n");
+    LevelOrder(test);
+}
+
 int main() {
     //样例
     //输入：ABE##F##CG### 结果：
@@ -41,5 +47,7 @@ int main() {
     RecursiveMethod(test);
     printf("\n\n");
     NonRecursiveMethod(test);
+    printf("\n\n");
+    //LevelOrderMethod(test);
     return 0;
 }
