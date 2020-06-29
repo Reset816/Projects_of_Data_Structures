@@ -32,7 +32,7 @@ void NonRecursiveMethod(BinaryTree test) {
 }
 
 void LevelOrderMethod(BinaryTree test) {
-    printf("\nLevelOrder:\n");
+    printf("LevelOrder:\n");
     LevelOrder(test);
 }
 
@@ -48,6 +48,6 @@ int main() {
     printf("\n\n");
     NonRecursiveMethod(test);
     printf("\n\n");
-    //LevelOrderMethod(test);
+    LevelOrderMethod(test);
     return 0;
 }
