@@ -1,0 +1,46 @@
+#ifndef EXPERIMENT_6_NON_RECURSIVE_H
+#define EXPERIMENT_6_NON_RECURSIVE_H
+
+#endif //EXPERIMENT_6_NON_RECURSIVE_H
+
+#include "stack.h"
+
+void non_Recursive_InOrder(BinaryTree &T) {
+    Stack storage_node;
+
+    BinaryTree Search_Pointer = T;
+    do {
+        while (Search_Pointer != NULL) {//不把#入栈
+            push(&storage_node, Search_Pointer);
+            Search_Pointer = Search_Pointer->lchild;
+        }
+        if (!isEmpty(storage_node)) {
+            //此时Search_Pointer指向NULL
+            Search_Pointer = storage_node.top->ElementofStack;
+            //此时Search_Pointer指向最底层左结点
+            pop(&storage_node);
+            Visit(Search_Pointer);
+            Search_Pointer = Search_Pointer->rchild;
+        }
+    } while (!isEmpty(storage_node) || Search_Pointer != NULL);
+}
+
+void non_Recursive_PreOrder(BinaryTree &T) {
+    Stack storage_node;
+
+    BinaryTree Search_Pointer = T;
+    do {
+        while (Search_Pointer != NULL) {//不把#入栈
+            push(&storage_node, Search_Pointer);
+            Search_Pointer = Search_Pointer->lchild;
+        }
+        if (!isEmpty(storage_node)) {
+            //此时Search_Pointer指向NULL
+            Search_Pointer = storage_node.top->ElementofStack;
+            //此时Search_Pointer指向最底层左结点
+            pop(&storage_node);
+            Visit(Search_Pointer);
+            Search_Pointer = Search_Pointer->rchild;
+        }
+    } while (!isEmpty(storage_node) || Search_Pointer != NULL);
+}
