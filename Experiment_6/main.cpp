@@ -36,7 +36,12 @@ void LevelOrderMethod(BinaryTree test) {
 
 int main() {
     //样例
-    //输入：ABE##F##CG### 结果：
+    //输入：ABE##F##CG###
+    //期望结果：
+    //先序遍历 A,B,E,F,C,G
+    //中序遍历 E,B,F,A,G,C
+    //后序遍历 E,F,B,G,C,A
+    //层次遍历 A,B,C,E,F,G
 
     printf("Type in the BinaryTree\nFor Example:\nABE##F##CG###\n");
     BinaryTree T;
