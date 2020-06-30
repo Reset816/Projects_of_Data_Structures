@@ -3,32 +3,30 @@
 #include "non_recursive.h"
 #include "LevelOrder.h"
 
-using namespace std;
-
-void RecursiveMethod(BinaryTree test) {
+void RecursiveMethod(BinaryTree T) {
     printf("recursive\n");
 
     printf("PreOrder:\n");
-    Recursive_PreOrder(test);
+    Recursive_PreOrder(T);
 
     printf("\nInOrder:\n");
-    Recursive_InOrder(test);
+    Recursive_InOrder(T);
 
     printf("\nPostOrder:\n");
-    Recursive_PostOrder(test);
+    Recursive_PostOrder(T);
 }
 
-void NonRecursiveMethod(BinaryTree test) {
+void NonRecursiveMethod(BinaryTree T) {
     printf("non-recursive\n");
 
     printf("PreOrder:\n");
-    non_Recursive_PreOrder(test);
+    non_Recursive_PreOrder(T);
 
     printf("\nInOrder:\n");
-    non_Recursive_InOrder(test);
+    non_Recursive_InOrder(T);
 
     printf("\nPostOrder:\n");
-    non_Recursive_PostOrder(test);
+    non_Recursive_PostOrder(T);
 }
 
 void LevelOrderMethod(BinaryTree test) {
@@ -41,13 +39,13 @@ int main() {
     //输入：ABE##F##CG### 结果：
 
     printf("Type in the BinaryTree\nFor Example:\nABE##F##CG###\n");
-    BinaryTree test;
-    CreateBinaryTree(test);
+    BinaryTree T;
+    CreateBinaryTree(T);
 
-    RecursiveMethod(test);
+    RecursiveMethod(T);
     printf("\n\n");
-    NonRecursiveMethod(test);
+    NonRecursiveMethod(T);
     printf("\n\n");
-    LevelOrderMethod(test);
+    LevelOrderMethod(T);
     return 0;
 }
