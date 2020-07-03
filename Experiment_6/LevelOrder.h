@@ -1,7 +1,7 @@
 #ifndef EXPERIMENT_6_LEVELORDER_H
 #define EXPERIMENT_6_LEVELORDER_H
 
-#include "LinkedList.h"
+#include "BinaryTree.h"
 
 void LevelOrder(BinaryTree &T);
 

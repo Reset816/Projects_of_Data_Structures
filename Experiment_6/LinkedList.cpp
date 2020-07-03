@@ -1,6 +1,5 @@
 #include "LinkedList.h"
-#include "malloc.h"
-#include "cstdio"
+#include <cstdio>
 
 bool isEmpty(StackorQueue plist) {
     if (plist.top == NULL) {
