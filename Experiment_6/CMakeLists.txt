@@ -3,4 +3,4 @@ project(Experiment_6)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Experiment_6 main.cpp BinaryTree.h stack.h queue.h non_recursive.h recursive.h LevelOrder.h)
+add_executable(Experiment_6 main.cpp BinaryTree.h stack.h queue.h non_recursive.h recursive.h LevelOrder.h LinkedList.h)
