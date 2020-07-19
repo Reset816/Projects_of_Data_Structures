@@ -1,5 +1,6 @@
 #include <iostream>
 #include "node.h"
+#include "queue.h"
 
 using namespace std;
 
@@ -35,15 +36,33 @@ void DFS(int StartSearch, head row[]) {
     }
 }
 
+void BFS(Queue &storage, head row[]) {
+    if (!isEmpty(storage)) {
+        int nodetoVisit = popqueue(&storage);
+        visit(nodetoVisit, row);
+        node *P = row[nodetoVisit].firstnode;
+        while (P) {
+            if (!row[P->adjvex].isvisit) {
+                push(&storage, P->adjvex);
+                row[P->adjvex].isvisit = true;
+            }
+
+            P = P->nextnode;
+        }
+        BFS(storage, row);
+    }
+}
+
 int main() {
     int n, m;
     scanf("%d,%d", &n, &m);
     head row[n + 1];
     init(n, row);
-//    printf("%32133123");
-//    printf("%32133123");
-//    printf("%32133123");
 
-    DFS(1, row);
+    //DFS(1, row);
+
+    Queue storage;
+    push(&storage, 1);
+    BFS(storage, row);
     return 0;
 }
