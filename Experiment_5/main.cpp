@@ -1,42 +1,49 @@
 #include <iostream>
+#include "node.h"
 
 using namespace std;
 
-typedef struct Node {
-    int adjvex;
-    struct Node *nextarc = NULL;
-} node;
-
-typedef struct Head {
-    int vexdata;
-    struct Node *firstarc = NULL;
-} head;
-
-
-
-int main() {
-    int n, m;
-    scanf("%d,%d", &n, &m);
-//    printf("%d|||%d",n,m);
-//    int a[n];
-//    for(int i=0; i<n;i++)
-//    printf("%d ",a[i]);
-    head row[n];
-    for (int i = 0; i < n; i++) {
+void init(int n, head row[]) {
+    for (int i = 1; i <= n; i++) {
         int NumofEdge;
         cin >> row[i].vexdata;
         scanf(",%d", &NumofEdge);
         for (int j = 1; j <= NumofEdge; j++) {
             node *P;
             P = (node *) malloc(sizeof(node));
-            P->nextarc = row[i].firstarc;
-            row[i].firstarc = P;
+            P->nextnode = row[i].firstnode;
+            row[i].firstnode = P;
 
             scanf(",%d", &P->adjvex);
         }
     }
-    printf("%32133123");
-    printf("%32133123");
-    printf("%32133123");
+}
+
+void visit(int NodetoVisit, head row[]) {
+    printf("%d ", NodetoVisit);
+    row[NodetoVisit].isvisit = true;
+}
+
+void DFS(int StartSearch, head row[]) {
+    if (!row[StartSearch].isvisit) {
+        visit(StartSearch, row);
+        node *P = row[StartSearch].firstnode;
+        while (P) {
+            DFS(P->adjvex, row);
+            P = P->nextnode;
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d,%d", &n, &m);
+    head row[n + 1];
+    init(n, row);
+//    printf("%32133123");
+//    printf("%32133123");
+//    printf("%32133123");
+
+    DFS(1, row);
     return 0;
 }

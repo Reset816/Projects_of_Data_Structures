@@ -3,4 +3,5 @@ project(Experiment_5)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Experiment_5 main.cpp)
+aux_source_directory(. DIR_SRCS)
+add_executable(Experiment_5 ${DIR_SRCS})
