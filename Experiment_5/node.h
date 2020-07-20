@@ -12,6 +12,7 @@ typedef struct Head {
     int vexdata;
     struct Node *firstnode = NULL;
     bool isvisit = false;
+    int NumofEdge;
 } head;
 
 #endif //EXPERIMENT_5_NODE_H

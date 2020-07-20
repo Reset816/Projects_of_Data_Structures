@@ -6,10 +6,9 @@ using namespace std;
 
 void init(int n, head row[]) {
     for (int i = 1; i <= n; i++) {
-        int NumofEdge;
         cin >> row[i].vexdata;
-        scanf(",%d", &NumofEdge);
-        for (int j = 1; j <= NumofEdge; j++) {
+        scanf(",%d", &row[i].NumofEdge);
+        for (int j = 1; j <= row[i].NumofEdge; j++) {
             node *P;
             P = (node *) malloc(sizeof(node));
             P->nextnode = row[i].firstnode;
@@ -17,6 +16,12 @@ void init(int n, head row[]) {
 
             scanf(",%d", &P->adjvex);
         }
+    }
+}
+
+void ResetVisit(int n, head row[]) {
+    for (int i = 1; i <= n; i++) {
+        row[i].isvisit = false;
     }
 }
 
@@ -54,15 +59,36 @@ void BFS(Queue &storage, head row[]) {
 }
 
 int main() {
+    //example
+/*
+5,14
+1,3,2,5,4
+2,3,1,5,3
+3,2,2,4
+4,3,1,5,3
+5,3,4,1,2
+*/
+    //expected output
+/*
+DFS:
+1 4 3 2 5
+BFS:
+1 4 5 2 3
+ */
+
     int n, m;
     scanf("%d,%d", &n, &m);
     head row[n + 1];
     init(n, row);
 
-    //DFS(1, row);
+    printf("DFS:\n");
+    DFS(1, row);
+
+    ResetVisit(n, row);
 
     Queue storage;
     push(&storage, 1);
+    printf("\nBFS:\n");
     BFS(storage, row);
     return 0;
 }
