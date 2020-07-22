@@ -26,6 +26,7 @@ void init(int m, head row[]) {
 stack<int> REVERSE_TOPOLOGICAL_SORTING_RESULT;
 stack<int> TOPOLOGICAL_SORTING_RESULT;
 stack<int> CRITICAL_ACTIVITY;
+queue<int> CRITICAL_PATH;
 
 void get_ve(int n, head row[], int ve[]) {
     queue<int> S;
@@ -91,20 +92,15 @@ void PRINT_CRITICAL_ACTIVITY() {
     }
 }
 
-void PRINT_CRITICAL_PATH(head *row, int *e, int *l) {
-    cout << "Critical Path:";
-    int now;
-    while (!CRITICAL_ACTIVITY.empty()) {
-        now = CRITICAL_ACTIVITY.top();
-        CRITICAL_ACTIVITY.pop();
-        node *P = row[now].firstnode;
-        while (P) {
-            if (e[P->id_of_edge] == l[P->id_of_edge]) {
-                cout << P->adjvex << " ";
-                continue;
-            }
-            P = P->nextnode;
+void PRINT_CRITICAL_PATH(head *row, int *e, int *l, int PathNode) {
+    cout << PathNode << " ";
+    node *P = row[PathNode].firstnode;
+    while (P) {
+        if (e[P->id_of_edge] == l[P->id_of_edge]) {
+            PRINT_CRITICAL_PATH(row, e, l, P->adjvex);
+            break;
         }
+        P = P->nextnode;
     }
 }
 
@@ -129,9 +125,11 @@ int main() {
 //    for (int i = 1; i <= m; i++) {
 //        cout << i << " " << l[i] << endl;
 //    }
-    //PRINT_CRITICAL_ACTIVITY();
+    cout << "Critical Activity:";
+    PRINT_CRITICAL_ACTIVITY();
     cout << endl;
-    PRINT_CRITICAL_PATH(row, e, l);
+    cout << "Critical Path:";
+    PRINT_CRITICAL_PATH(row, e, l, 1);
     return 0;
 }
 
