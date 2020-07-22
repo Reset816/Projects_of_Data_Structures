@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation('com.squareup.okhttp3:okhttp:4.6.0')
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    compile 'net.sf.json-lib:json-lib:2.4:jdk13'
 }
 
 tasks.withType(JavaCompile) {
