@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include <memory.h>
 #include "node.h"
 
 using namespace std;
@@ -13,6 +14,7 @@ void init(int m, head row[]) {
         P = (node *) malloc(sizeof(node));
         P->adjvex = end;
         P->weight = weight;
+        P->id_of_edge = i;
         P->nextnode = NULL;
         P->nextnode = row[start].firstnode;
         row[start].firstnode = P;
@@ -43,33 +45,39 @@ void get_ve(int n, head row[], int ve[]) {
             row[P->adjvex].indegree--;
             if (row[P->adjvex].indegree == 0) {
                 S.push(P->adjvex);
-                ve[P->adjvex] = ve[now] + P->weight;
+                ve[P->adjvex] = max(ve[now] + P->weight, ve[P->adjvex]);
             }
             P = P->nextnode;
         }
     }
-    //test
-    for (int i = 1; i <= n; i++) {
-        cout << i << " " << ve[i] << endl;
-    }
+//    //test ve
+//    for (int i = 1; i <= n; i++) {
+//        cout << i << " " << ve[i] << endl;
+//    }
 }
 
-void get_vl(int n, head row[], int ve[], int vl[]) {
+void get_vl_and_e_and_l(int n, head *row, int *ve, int *vl, int *e, int *l) {
     int now;
     vl[TOPOLOGICAL_SORTING_RESULT.top()] = ve[TOPOLOGICAL_SORTING_RESULT.top()];
     while (!TOPOLOGICAL_SORTING_RESULT.empty()) {
         now = TOPOLOGICAL_SORTING_RESULT.top();
         TOPOLOGICAL_SORTING_RESULT.pop();
         node *P = row[now].firstnode;
+
         while (P) {
+            //vl[now] = min(vl[P->adjvex] - P->weight, vl[now]);
             vl[now] = vl[P->adjvex] - P->weight;
+            e[P->id_of_edge] = ve[now];//get e
+            l[P->id_of_edge] = vl[P->adjvex] - P->weight;//get l
             P = P->nextnode;
         }
     }
-    //test
-    for (int i = 1; i <= n; i++) {
-        cout << i << " " << vl[i] << endl;
-    }
+    //test vl
+//    for (int i = 1; i <= n; i++) {
+//        cout << i << " " << vl[i] << endl;
+//    }
+
+
 }
 
 int main() {
@@ -78,10 +86,21 @@ int main() {
     head row[n + 1];
     init(m, row);
     int ve[n + 1], vl[n + 1], e[m + 1], l[m + 1];
+    memset(ve, 0, sizeof(ve));
+    //memset(vl, INT_MAX, sizeof(vl)); 不能这样
+    memset(vl, 0x3f, sizeof(vl));
 
     get_ve(n, row, ve);
     cout << endl;
-    get_vl(n, row, ve, vl);
+    get_vl_and_e_and_l(n, row, ve, vl, e, l);
+    //test e
+//    for (int i = 1; i <= m; i++) {
+//        cout << i << " " << e[i] << endl;
+//    }
+    //test l
+//    for (int i = 1; i <= m; i++) {
+//        cout << i << " " << l[i] << endl;
+//    }
 
     return 0;
 }

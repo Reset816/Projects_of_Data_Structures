@@ -6,6 +6,7 @@
 typedef struct Node {
     int adjvex;
     int weight;
+    int id_of_edge;
     struct Node *nextnode = NULL;
 } node;
 
