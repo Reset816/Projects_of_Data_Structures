@@ -21,28 +21,9 @@ void init(int m, head row[]) {
     }
 }
 
-/*
-9 11
-6 1 2
-4 1 3
-5 1 4
-1 2 5
-1 3 5
-2 4 6
-9 5 7
-7 5 8
-4 6 8
-2 7 9
-4 8 9
-*/
+stack<int> TOPOLOGICAL_SORTING_RESULT;
 
-int main() {
-    int n, m;
-    scanf("%d %d", &n, &m);
-    head row[n + 1];
-    init(m, row);
-    int ve[n + 1], vl[n + 1], e[m + 1], l[m + 1];
-
+void get_ve(int n, head row[], int ve[]) {
     queue<int> S;
     for (int i = 1; i <= n; i++) {
         if (row[i].indegree == 0) {
@@ -52,7 +33,6 @@ int main() {
         }
     }
 
-    stack<int> TOPOLOGICAL_SORTING_RESULT;
     int now;
     while (!S.empty()) {
         now = S.front();
@@ -69,18 +49,13 @@ int main() {
         }
     }
     //test
-//    while (!TOPOLOGICAL_SORTING_RESULT.empty()) {
-//        cout << TOPOLOGICAL_SORTING_RESULT.front();
-//        TOPOLOGICAL_SORTING_RESULT.pop();
-//    }
-    //test
     for (int i = 1; i <= n; i++) {
         cout << i << " " << ve[i] << endl;
     }
+}
 
-    cout << endl;
-    //get vl
-
+void get_vl(int n, head row[], int ve[], int vl[]) {
+    int now;
     vl[TOPOLOGICAL_SORTING_RESULT.top()] = ve[TOPOLOGICAL_SORTING_RESULT.top()];
     while (!TOPOLOGICAL_SORTING_RESULT.empty()) {
         now = TOPOLOGICAL_SORTING_RESULT.top();
@@ -95,6 +70,33 @@ int main() {
     for (int i = 1; i <= n; i++) {
         cout << i << " " << vl[i] << endl;
     }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    head row[n + 1];
+    init(m, row);
+    int ve[n + 1], vl[n + 1], e[m + 1], l[m + 1];
+
+    get_ve(n, row, ve);
+    cout << endl;
+    get_vl(n, row, ve, vl);
 
     return 0;
 }
+
+/*
+9 11
+6 1 2
+4 1 3
+5 1 4
+1 2 5
+1 3 5
+2 4 6
+9 5 7
+7 5 8
+4 6 8
+2 7 9
+4 8 9
+*/
