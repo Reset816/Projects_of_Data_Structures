@@ -24,6 +24,7 @@ void init(int m, head row[]) {
 }
 
 stack<int> TOPOLOGICAL_SORTING_RESULT;
+stack<int> CRITICAL_ACTIVITY;
 
 void get_ve(int n, head row[], int ve[]) {
     queue<int> S;
@@ -69,6 +70,8 @@ void get_vl_and_e_and_l(int n, head *row, int *ve, int *vl, int *e, int *l) {
             vl[now] = vl[P->adjvex] - P->weight;
             e[P->id_of_edge] = ve[now];//get e
             l[P->id_of_edge] = vl[P->adjvex] - P->weight;//get l
+            if (e[P->id_of_edge] == l[P->id_of_edge])
+                CRITICAL_ACTIVITY.push(P->id_of_edge);
             P = P->nextnode;
         }
     }
@@ -76,9 +79,15 @@ void get_vl_and_e_and_l(int n, head *row, int *ve, int *vl, int *e, int *l) {
 //    for (int i = 1; i <= n; i++) {
 //        cout << i << " " << vl[i] << endl;
 //    }
-
-
 }
+
+void PRINT_CRITICAL_ACTIVITY(){
+    while (!CRITICAL_ACTIVITY.empty()) {
+        cout << CRITICAL_ACTIVITY.top() << " ";
+        CRITICAL_ACTIVITY.pop();
+    }
+}
+
 
 int main() {
     int n, m;
@@ -101,7 +110,6 @@ int main() {
 //    for (int i = 1; i <= m; i++) {
 //        cout << i << " " << l[i] << endl;
 //    }
-
     return 0;
 }
 
