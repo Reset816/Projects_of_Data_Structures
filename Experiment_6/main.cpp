@@ -85,7 +85,6 @@ void get_vl_and_e_and_l(int n, head *row, int *ve, int *vl, int *e, int *l) {
 }
 
 void PRINT_CRITICAL_ACTIVITY() {
-    cout << "Critical Activity:";
     while (!CRITICAL_ACTIVITY.empty()) {
         cout << CRITICAL_ACTIVITY.top() << " ";
         CRITICAL_ACTIVITY.pop();
@@ -125,10 +124,10 @@ int main() {
 //    for (int i = 1; i <= m; i++) {
 //        cout << i << " " << l[i] << endl;
 //    }
-    cout << "Critical Activity:";
+    cout << "Critical Activity:" << endl;
     PRINT_CRITICAL_ACTIVITY();
     cout << endl;
-    cout << "Critical Path:";
+    cout << "Critical Path:" << endl;
     PRINT_CRITICAL_PATH(row, e, l, 1);
     return 0;
 }
