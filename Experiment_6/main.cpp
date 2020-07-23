@@ -84,20 +84,35 @@ void get_vl_and_e_and_l(int n, head *row, int *ve, int *vl, int *e, int *l) {
 //    }
 }
 
+int NumofCriticalActivity = 0;
+
 void PRINT_CRITICAL_ACTIVITY() {
     while (!CRITICAL_ACTIVITY.empty()) {
         cout << CRITICAL_ACTIVITY.top() << " ";
         CRITICAL_ACTIVITY.pop();
+        NumofCriticalActivity++;
     }
 }
 
+int PrintNum = 0;
+
 void PRINT_CRITICAL_PATH(head *row, int *e, int *l, int PathNode) {
-    cout << PathNode << " ";
+    CRITICAL_PATH.push(PathNode);
+    PrintNum++;
+    if (PrintNum == NumofCriticalActivity - 1) {
+        int queue_size = CRITICAL_PATH.size();
+        for (int i = 1; i <= queue_size; i++) {
+            cout << CRITICAL_PATH.front() << " ";
+            CRITICAL_PATH.push(CRITICAL_PATH.front());
+            CRITICAL_PATH.pop();
+        }
+        cout << endl;
+        return;
+    }
     node *P = row[PathNode].firstnode;
     while (P) {
         if (e[P->id_of_edge] == l[P->id_of_edge]) {
             PRINT_CRITICAL_PATH(row, e, l, P->adjvex);
-            break;
         }
         P = P->nextnode;
     }
@@ -128,11 +143,12 @@ int main() {
     PRINT_CRITICAL_ACTIVITY();
     cout << endl;
     cout << "Critical Path:" << endl;
-    PRINT_CRITICAL_PATH(row, e, l, 1);
+    PRINT_CRITICAL_PATH(row, e, l, 1);//Trying to print multiple critical path but failed. No time for Debugging.
     return 0;
 }
 
 /*
+Example:
 9 11
 6 1 2
 4 1 3
